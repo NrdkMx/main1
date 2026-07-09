@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1c12">
+<title>Максим &amp; Дарина — Запрошення на весілля</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant:wght@300;400;500&family=Great+Vibes&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@600;700&family=Cinzel:wght@500;600&display=swap');
+
+  :root{
+    --navy-deep:   #0a1c12;
+    --navy:        #14351f;
+    --navy-light:  #1f4e2c;
+    --gold:        #c9a76a;
+    --gold-light:  #ecd9a8;
+    --gold-dim:    #8a7345;
+    --ivory:       #f6efe1;
+    --white:       #f7f4ea;
+    --olive:       #767c46;
+    --olive-d:     #565c32;
+    --beige:       #dcccA4;
+    --silver:      #bcc4bd;
+    --silver-d:    #8d968f;
+    --brown:       #6b4a34;
+    --leaf:        #4c6b45;
+    --leaf-d:      #33472e;
+    --wheat:       #d9b968;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background:var(--navy-deep);
+    font-family:'EB Garamond', Georgia, serif;
+    color:var(--ivory);
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  body{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  body.locked{ overflow:hidden; height:100vh; height:100svh; }
+
+  /* ---------- COVER ---------- */
+  .cover{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:transparent;
+    transition:visibility 1s ease;
+  }
+  .cover.hide{
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .door{
+    position:absolute; top:0; bottom:0; width:50%;
+    background:radial-gradient(120% 120% at 50% 0%, var(--navy-light) 0%, var(--navy) 55%, var(--navy-deep) 100%);
+    z-index:2;
+    transition:transform 1s cubic-bezier(.65,0,.35,1);
+  }
+  .door-left{ left:0; transform-origin:left; }
+  .door-right{ right:0; transform-origin:right; }
+  .cover.opening .door-left{ transform:translateX(-100%); }
+  .cover.opening .door-right{ transform:translateX(100%); }
+  .cover .cover-card{ position:relative; z-index:3; }
+  .cover .starfield{ z-index:3; }
+  .cover.opening .cover-card{
+    transition:opacity .5s ease, transform .5s ease;
+    opacity:0;
+    transform:scale(0.92);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .door{ transition:opacity .3s ease; }
+    .cover.opening .door-left, .cover.opening .door-right{ transform:none; opacity:0; }
+  }
+  .cover-card{
+    width:100%;
+    max-width:360px;
+    text-align:center;
+    padding:44px 28px 40px;
+    border:1px solid var(--gold-dim);
+    border-radius:10px;
+    background:rgba(201,167,106,0.05);
+    position:relative;
+  }
+  .cover-monogram{
+    width:88px; height:88px;
+    margin:0 auto 20px;
+    display:block;
+    opacity:0;
+    animation:sealPop 1s cubic-bezier(.22,1.4,.36,1) forwards .15s;
+  }
+  @keyframes sealPop{
+    0%{ transform:scale(0) rotate(-160deg); opacity:0; }
+    70%{ transform:scale(1.08) rotate(5deg); opacity:1; }
+    100%{ transform:scale(1) rotate(0deg); opacity:1; }
+  }
+  .cover-names{
+    font-family:'Great Vibes', cursive;
+    font-size:52px;
+    line-height:1.05;
+    color:var(--gold-light);
+    margin:0 0 6px;
+    text-shadow:0 0 18px rgba(201,167,106,0.35);
+    opacity:0;
+    animation:fadeUp 1s ease forwards .5s;
+  }
+  .cover-names .amp{
+    font-size:0.55em;
+    color:var(--gold);
+    display:block;
+    line-height:0.6;
+    margin:2px 0;
+  }
+  .cover-date{
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    text-shadow:0 0 10px rgba(201,167,106,0.45);
+    margin:0 0 30px;
+    opacity:0;
+    animation:fadeUp 1s ease forwards .8s;
+  }
+  .open-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:14px 30px;
+    border-radius:30px;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold-light);
+    font-family:'EB Garamond', serif;
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    opacity:0;
+    animation:fadeUp 1s ease forwards 1.1s;
+    transition:background .3s ease, color .3s ease, transform .3s ease;
+  }
+  .open-btn:hover{
+    background:var(--gold);
+    color:var(--navy-deep);
+    transform:translateY(-1px);
+  }
+  .open-btn svg{ transition:transform .3s ease; }
+  .open-btn:hover svg{ transform:translateX(3px); }
+
+  .stage{
+    position:relative;
+    max-width:520px;
+    margin:0 auto;
+    overflow:hidden;
+    box-shadow:0 0 60px rgba(0,0,0,0.6);
+    background:linear-gradient(180deg,
+      var(--navy-light)   0%,
+      var(--navy)         10%,
+      var(--navy-deep)    20%,
+      #102a1a             32%,
+      #143620             40%,
+      #1c4028             48%,
+      #123420             58%,
+      #0d2416             68%,
+      #123420             78%,
+      #14351f             86%,
+      var(--navy)         94%,
+      var(--navy-deep)    100%
+    );
+  }
+
+  /* ---------- starfield ---------- */
+  .starfield{
+    position:absolute; inset:0;
+    pointer-events:none;
+    z-index:1;
+  }
+  .star{
+    position:absolute;
+    background:var(--gold-light);
+    border-radius:50%;
+    opacity:0.85;
+    animation:twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:.25; transform:scale(0.8);}
+    50%{ opacity:1; transform:scale(1.15);}
+  }
+  .spark{
+    position:absolute;
+    width:14px; height:14px;
+    opacity:.9;
+  }
+
+  .firefly{
+    position:absolute;
+    width:5px; height:5px;
+    background:var(--gold-light);
+    border-radius:50%;
+    box-shadow:0 0 8px 3px rgba(236,217,168,0.6);
+    animation:drift 9s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%{ transform:translate(0,0); opacity:0;}
+    10%{opacity:1;}
+    50%{ transform:translate(18px,-30px); }
+    90%{opacity:1;}
+    100%{ transform:translate(-10px,-60px); opacity:0;}
+  }
+
+  section{
+    position:relative;
+    z-index:2;
+    padding:64px 32px;
+    text-align:center;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding-top:56px;
+  }
+  .eyebrow{
+    letter-spacing:6px;
+    font-size:15px;
+    font-weight:600;
+    color:var(--gold-light);
+    text-transform:uppercase;
+    text-shadow:0 0 6px rgba(236,217,168,0.85), 0 0 18px rgba(201,167,106,0.5);
+    display:inline-block;
+    opacity:0;
+    animation:fadeUp 1.2s ease forwards .2s;
+  }
+  .oval-frame{
+    position:relative;
+    width:280px;
+    max-width:78vw;
+    margin:18px auto 0;
+    opacity:0;
+    animation:fadeUp 1.4s ease forwards .5s;
+  }
+  .oval-frame svg{ width:100%; height:auto; display:block; }
+  .oval-text{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 14%;
+  }
+  .names-script{
+    font-family:'Great Vibes', cursive;
+    font-size:56px;
+    max-width:100%;
+    line-height:0.9;
+    color:var(--gold-light);
+    margin:0;
+    text-shadow:0 0 18px rgba(201,167,106,0.35);
+    opacity:0;
+    animation:fadeUp 1.4s ease forwards 1s;
+  }
+  .amp{
+    font-family:'Great Vibes', cursive;
+    font-size:0.5em;
+    color:var(--gold);
+    display:block;
+    line-height:0.7;
+    margin:2px 0;
+  }
+  .hero-sub{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:17px;
+    color:var(--ivory);
+    opacity:0;
+    letter-spacing:1px;
+    margin-top:22px;
+    animation:fadeUp 1.4s ease forwards 1.4s;
+  }
+  .scroll-cue{
+    margin-top:30px;
+    opacity:0;
+    animation:fadeUp 1.4s ease forwards 1.9s;
+  }
+  .scroll-cue svg{ display:block; margin:0 auto; }
+  .swipe-line{
+    animation:swipeFade 2.2s ease-in-out infinite;
+  }
+  .swipe-line.d2{ animation-delay:.35s; }
+  .swipe-line.d3{ animation-delay:.7s; }
+  @keyframes swipeFade{
+    0%{ opacity:0; transform:translateY(-6px); }
+    30%{ opacity:1; transform:translateY(0); }
+    70%{ opacity:1; transform:translateY(0); }
+    100%{ opacity:0; transform:translateY(8px); }
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro{
+  }
+  .intro p{
+    font-family:'Cormorant Garamond', serif;
+    font-size:19px;
+    line-height:1.75;
+    color:var(--ivory);
+    max-width:380px;
+    margin:0 auto;
+  }
+  .intro .names-mini{
+    font-family:'Great Vibes', cursive;
+    font-size:40px;
+    color:var(--gold);
+    display:inline-block;
+    margin-top:10px;
+  }
+  .divider{
+    width:60px; height:1px;
+    background:var(--gold-dim);
+    margin:26px auto;
+  }
+
+  /* ---------- DETAILS ---------- */
+  .details{
+  }
+  .details .eyebrow{ }
+  .card{
+    border:1px solid var(--gold-dim);
+    border-radius:4px;
+    padding:26px 20px;
+    margin:22px auto;
+    max-width:360px;
+    background:rgba(201,167,106,0.04);
+  }
+  .card .label{
+    font-size:11px;
+    letter-spacing:3px;
+    color:var(--gold-light);
+    text-transform:uppercase;
+    text-shadow:0 0 10px rgba(201,167,106,0.45);
+    margin-bottom:8px;
+  }
+  .card .big{
+    font-family:'Cormorant Garamond', serif;
+    font-size:30px;
+    color:var(--ivory);
+    margin:0;
+  }
+  .card .small{
+    font-family:'Cormorant', serif;
+    font-size:15px;
+    color:#cfd8cf;
+    margin-top:6px;
+    line-height:1.5;
+  }
+  .card a{
+    color:var(--gold-light);
+    text-decoration:underline;
+    font-size:13px;
+  }
+
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:30px auto 6px;
+    flex-wrap:wrap;
+  }
+  .countdown .box{
+    min-width:64px;
+  }
+  .countdown .num{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:32px;
+    color:var(--gold-light);
+    border:1px solid var(--gold-dim);
+    border-radius:4px;
+    padding:10px 4px;
+    display:block;
+  }
+  .countdown .cap{
+    font-size:10px;
+    letter-spacing:2px;
+    color:var(--gold-light);
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(201,167,106,0.4);
+    margin-top:6px;
+    display:block;
+  }
+
+  /* ---------- SCHEDULE (GRID CARDS) ---------- */
+  .schedule-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    max-width:340px;
+    margin:22px auto 0;
+  }
+  .sch-card{
+    border:1px solid var(--gold-dim);
+    border-radius:12px;
+    padding:20px 10px 16px;
+    text-align:center;
+    background:rgba(201,167,106,0.03);
+    cursor:pointer;
+    font:inherit;
+    color:inherit;
+    opacity:0;
+    transform:scale(0.92);
+    transition:opacity .5s ease, transform .5s ease, border-color .3s ease, background .3s ease;
+  }
+  .details.in .sch-card{ opacity:1; transform:scale(1); }
+  .details.in .sch-card:nth-child(1){ transition-delay:.1s; }
+  .details.in .sch-card:nth-child(2){ transition-delay:.22s; }
+  .details.in .sch-card:nth-child(3){ transition-delay:.34s; }
+  .details.in .sch-card:nth-child(4){ transition-delay:.46s; }
+  .sch-card:hover, .sch-card.active{
+    border-color:var(--gold);
+    background:rgba(201,167,106,0.08);
+  }
+  .sch-icon{
+    width:40px; height:40px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    border:1px solid var(--gold-dim);
+    box-shadow:inset 0 0 0 3px var(--navy-deep), inset 0 0 0 4px rgba(201,167,106,0.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--navy-deep);
+    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+  .sch-card.active .sch-icon{
+    border-color:var(--gold);
+    box-shadow:inset 0 0 0 3px var(--navy-deep), inset 0 0 0 4px rgba(201,167,106,0.2), 0 0 10px 1px rgba(201,167,106,0.5);
+    transform:scale(1.08);
+  }
+  .sch-icon svg{ width:19px; height:19px; }
+  .sch-time{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:19px;
+    color:var(--gold-light);
+    display:block;
+  }
+  .sch-label{
+    font-family:'Cormorant', serif;
+    font-size:14.5px;
+    color:var(--ivory);
+    letter-spacing:0.3px;
+    display:block;
+    margin-top:2px;
+  }
+  .sch-desc{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:12.5px;
+    color:#c9d3c8;
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .4s ease, opacity .4s ease, margin-top .4s ease;
+    margin-top:0;
+    line-height:1.4;
+  }
+  .sch-card.active .sch-desc{
+    max-height:70px;
+    opacity:1;
+    margin-top:8px;
+  }
+
+  /* ---------- PALETTE ---------- */
+  .palette{
+  }
+  .swatches-row{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    margin-top:22px;
+  }
+  .swatch-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+  }
+  .swatch-frame{
+    width:52px; height:52px;
+    display:block;
+    transition:transform .35s cubic-bezier(.22,1.4,.36,1);
+  }
+  .swatch-item:hover .swatch-frame,
+  .swatch-item.active .swatch-frame{
+    transform:scale(1.18);
+  }
+  .swatch-name{
+    font-family:'Cormorant Garamond', serif;
+    font-size:12px;
+    letter-spacing:0.5px;
+    color:var(--gold-light);
+    opacity:0;
+    transform:translateY(-4px);
+    transition:opacity .3s ease, transform .3s ease;
+    white-space:nowrap;
+  }
+  .swatch-item:hover .swatch-name,
+  .swatch-item.active .swatch-name{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .palette p.small-note{
+    font-family:'Cormorant', serif;
+    font-size:14px;
+    color:#cdd6e5;
+    margin-top:20px;
+    font-style:italic;
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing{
+    padding-bottom:80px;
+  }
+  .closing .names-script{ font-size:52px; margin-top:22px;}
+  .closing .msg{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.7;
+    max-width:340px;
+    margin:18px auto 0;
+    color:var(--ivory);
+  }
+  .rsvp-note{
+    margin-top:40px;
+    font-size:12.5px;
+    letter-spacing:2px;
+    color:var(--gold-light);
+    text-transform:uppercase;
+    text-shadow:0 0 12px rgba(201,167,106,0.55);
+  }
+
+  .wreath-svg{ width:220px; height:auto; margin:0 auto; display:block; }
+
+  /* ---------- RSVP FORM ---------- */
+  .rsvp-form{
+    max-width:360px;
+    margin:26px auto 0;
+    text-align:left;
+  }
+  .field{
+    margin-bottom:20px;
+  }
+  .field label{
+    display:block;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  .field input[type="text"],
+  .field textarea{
+    width:100%;
+    padding:11px 12px;
+    background:rgba(246,239,225,0.06);
+    border:1px solid var(--gold-dim);
+    border-radius:4px;
+    color:var(--ivory);
+    font-family:'Cormorant', serif;
+    font-size:16px;
+  }
+  .field textarea{ min-height:80px; resize:vertical; }
+  .field input::placeholder, .field textarea::placeholder{ color:#9aa89e; opacity:.7; }
+  .field input:focus, .field textarea:focus{ outline:1px solid var(--gold); }
+
+  .radio-row{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .radio-row label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:15px;
+    letter-spacing:0;
+    text-transform:none;
+    color:var(--ivory);
+    margin:0;
+    cursor:pointer;
+  }
+  .radio-row input{ accent-color:var(--gold); }
+
+  .guest-stepper{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .guest-stepper button{
+    width:34px; height:34px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold-light);
+    font-size:18px;
+    cursor:pointer;
+    line-height:1;
+  }
+  .guest-stepper span{
+    font-family:'Cormorant Garamond', serif;
+    font-size:22px;
+    color:var(--ivory);
+    min-width:20px;
+    text-align:center;
+  }
+
+  .submit-btn{
+    width:100%;
+    padding:14px;
+    border-radius:30px;
+    border:1px solid var(--gold);
+    background:var(--gold);
+    color:var(--navy-deep);
+    font-family:'EB Garamond', serif;
+    font-size:14px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:transform .3s ease, background .3s ease;
+  }
+  .submit-btn:hover{ transform:translateY(-1px); background:var(--gold-light); }
+  .form-status{
+    margin-top:14px;
+    font-size:13px;
+    font-style:italic;
+    color:var(--gold-light);
+    text-align:center;
+    min-height:18px;
+  }
+
+  /* ---------- CALENDAR ---------- */
+  .calendar{
+    padding-bottom:30px;
+  }
+  .cal-buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:20px;
+    flex-wrap:wrap;
+  }
+  .cal-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 22px;
+    border-radius:30px;
+    border:1px solid var(--gold-dim);
+    color:var(--gold-light);
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:1px;
+    transition:background .3s ease, color .3s ease;
+  }
+  .cal-btn:hover{
+    background:var(--gold);
+    color:var(--navy-deep);
+    border-color:var(--gold);
+  }
+
+  footer{
+    text-align:center;
+    padding:18px;
+    font-size:11px;
+    color:var(--gold-dim);
+    background:var(--navy-deep);
+    letter-spacing:1px;
+  }
+
+  /* ---------- SMALL MOBILE SCREENS ---------- */
+  @media (max-width:380px){
+    section{ padding:56px 20px; }
+    .cover-names{ font-size:44px; }
+    .oval-frame{ width:230px; }
+    .countdown{ gap:8px; }
+    .countdown .box{ min-width:54px; }
+    .countdown .num{ font-size:28px; padding:8px 2px; }
+    .schedule-grid{ gap:10px; }
+    .sch-card{ padding:16px 6px 12px; }
+    .sch-time{ font-size:17px; }
+    .sch-label{ font-size:13.5px; }
+    .swatches-row{ gap:10px; }
+    .swatch-frame{ width:46px; height:46px; }
+    .cover-card{ padding:36px 20px 32px; }
+    .rsvp-form{ max-width:100%; }
+    .timeline-heading, .eyebrow{ font-size:13px; }
+  }
+  @media (max-width:340px){
+    .oval-frame{ width:200px; }
+    .countdown .box{ min-width:48px; }
+    .countdown .num{ font-size:24px; }
+  }
+</style>
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <g id="ornFrame">
+      <circle cx="32" cy="32" r="25" fill="none" stroke="#c9a76a" stroke-width="1"/>
+      <circle cx="32" cy="32" r="21.5" fill="none" stroke="#c9a76a" stroke-width="0.7" opacity="0.8"/>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.9">
+        <path d="M32,3 C29,7 29,11.5 32,14 C35,11.5 35,7 32,3 Z"/>
+        <path d="M27,6 C25.5,9 26,12.5 28.5,14.3"/>
+        <path d="M37,6 C38.5,9 38,12.5 35.5,14.3"/>
+        <path d="M29.5,4.5 C28.7,7 29,9.5 30.5,11"/>
+        <path d="M34.5,4.5 C35.3,7 35,9.5 33.5,11"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.9" transform="rotate(90 32 32)">
+        <path d="M32,3 C29,7 29,11.5 32,14 C35,11.5 35,7 32,3 Z"/>
+        <path d="M27,6 C25.5,9 26,12.5 28.5,14.3"/>
+        <path d="M37,6 C38.5,9 38,12.5 35.5,14.3"/>
+        <path d="M29.5,4.5 C28.7,7 29,9.5 30.5,11"/>
+        <path d="M34.5,4.5 C35.3,7 35,9.5 33.5,11"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.9" transform="rotate(180 32 32)">
+        <path d="M32,3 C29,7 29,11.5 32,14 C35,11.5 35,7 32,3 Z"/>
+        <path d="M27,6 C25.5,9 26,12.5 28.5,14.3"/>
+        <path d="M37,6 C38.5,9 38,12.5 35.5,14.3"/>
+        <path d="M29.5,4.5 C28.7,7 29,9.5 30.5,11"/>
+        <path d="M34.5,4.5 C35.3,7 35,9.5 33.5,11"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.9" transform="rotate(270 32 32)">
+        <path d="M32,3 C29,7 29,11.5 32,14 C35,11.5 35,7 32,3 Z"/>
+        <path d="M27,6 C25.5,9 26,12.5 28.5,14.3"/>
+        <path d="M37,6 C38.5,9 38,12.5 35.5,14.3"/>
+        <path d="M29.5,4.5 C28.7,7 29,9.5 30.5,11"/>
+        <path d="M34.5,4.5 C35.3,7 35,9.5 33.5,11"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.7" opacity="0.85" transform="rotate(45 32 32)">
+        <path d="M32,8 C30.3,10.5 30.3,13 32,14.5 C33.7,13 33.7,10.5 32,8 Z"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.7" opacity="0.85" transform="rotate(135 32 32)">
+        <path d="M32,8 C30.3,10.5 30.3,13 32,14.5 C33.7,13 33.7,10.5 32,8 Z"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.7" opacity="0.85" transform="rotate(225 32 32)">
+        <path d="M32,8 C30.3,10.5 30.3,13 32,14.5 C33.7,13 33.7,10.5 32,8 Z"/>
+      </g>
+      <g fill="none" stroke="#c9a76a" stroke-width="0.7" opacity="0.85" transform="rotate(315 32 32)">
+        <path d="M32,8 C30.3,10.5 30.3,13 32,14.5 C33.7,13 33.7,10.5 32,8 Z"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<!-- ===================== COVER / ЗУСТРІЧНА СТОРІНКА ===================== -->
+<div class="cover" id="cover">
+  <div class="door door-left"></div>
+  <div class="door door-right"></div>
+  <div class="starfield" id="starfield-cover"></div>
+  <div class="cover-card">
+    <svg class="cover-monogram" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="goldFoilCover" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ecd9a8"/>
+          <stop offset="35%" stop-color="#c9a76a"/>
+          <stop offset="50%" stop-color="#f6efe1"/>
+          <stop offset="65%" stop-color="#8a7345"/>
+          <stop offset="100%" stop-color="#ecd9a8"/>
+        </linearGradient>
+      </defs>
+      <rect x="22" y="22" width="44" height="44" transform="rotate(45 44 44)" fill="none" stroke="url(#goldFoilCover)" stroke-width="0.9"/>
+      <rect x="28" y="28" width="32" height="32" transform="rotate(45 44 44)" fill="none" stroke="url(#goldFoilCover)" stroke-width="0.5"/>
+      <text x="44" y="50" text-anchor="middle" font-family="'Cinzel', serif" font-weight="600" font-size="15" fill="url(#goldFoilCover)">M·D</text>
+    </svg>
+    <p class="cover-names">Максим<span class="amp">&amp;</span>Дарина</p>
+    <p class="cover-date">29 серпня 2026</p>
+    <button class="open-btn" id="openBtn" type="button">
+      Відкрити запрошення
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="starfield" id="starfield-hero"></div>
+    <div class="eyebrow">Запрошення на весілля</div>
+
+    <div class="names-script" style="margin-top:32px;">
+      Максим<span class="amp">&amp;</span>Дарина
+    </div>
+
+    <div class="scroll-cue">
+      <svg width="20" height="30" viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
+        <path class="swipe-line" d="M4 4 L10 10 L16 4" stroke="var(--gold-dim)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+        <path class="swipe-line d2" d="M4 12 L10 18 L16 12" stroke="var(--gold-dim)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+        <path class="swipe-line d3" d="M4 20 L10 26 L16 20" stroke="var(--gold-dim)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="intro reveal">
+    <div class="starfield" id="starfield-intro"></div>
+    <div class="eyebrow">Запрошення</div>
+    <div class="divider"></div>
+    <p>
+      Ми вирішили поєднати наші долі та створити сім'ю.
+      З величезною радістю запрошуємо вас на наше весілля.
+      Будемо надзвичайно щасливі бачити вас серед наших
+      найближчих людей у цей особливий день.
+    </p>
+    <div class="names-mini">Максим &amp; Дарина</div>
+  </section>
+
+  <!-- ===================== DETAILS ===================== -->
+  <section class="details reveal">
+    <div class="starfield" id="starfield-details"></div>
+    <div class="eyebrow">Коли і де</div>
+    <div class="divider"></div>
+
+    <div class="card">
+      <div class="label">Дата</div>
+      <p class="big">Субота, 29 серпня 2026</p>
+    </div>
+
+    <div class="eyebrow" style="margin-top:36px;">Розклад дня</div>
+    <p style="font-family:'Cormorant', serif; font-size:13px; color:var(--gold-dim); margin-top:6px;">торкніться картки, щоб дізнатись більше</p>
+    <div class="schedule-grid">
+      <button type="button" class="sch-card">
+        <span class="sch-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 3h10l-1.2 9.5a3.8 3.8 0 01-3.8 3.3 3.8 3.8 0 01-3.8-3.3L7 3z" stroke="var(--gold)" stroke-width="1.3"/>
+            <path d="M12 15.8V21M9 21h6" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sch-time">13:00</span>
+        <span class="sch-label">Велком-зона</span>
+        <span class="sch-desc">Зустрічаємо гостей келихом вітального напою</span>
+      </button>
+
+      <button type="button" class="sch-card">
+        <span class="sch-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="14" r="5.2" stroke="var(--gold)" stroke-width="1.3"/>
+            <circle cx="15" cy="14" r="5.2" stroke="var(--gold)" stroke-width="1.3"/>
+          </svg>
+        </span>
+        <span class="sch-time">13:30</span>
+        <span class="sch-label">Церемонія</span>
+        <span class="sch-desc">Урочиста клятва та обмін обручками</span>
+      </button>
+
+      <button type="button" class="sch-card">
+        <span class="sch-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 9h16M6 9v10a1 1 0 001 1h10a1 1 0 001-1V9" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M9 5v4M15 5v4" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sch-time">14:30</span>
+        <span class="sch-label">Банкет</span>
+        <span class="sch-desc">Святковий бенкет, тости та перший танець</span>
+      </button>
+
+      <button type="button" class="sch-card">
+        <span class="sch-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 13h16v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z" stroke="var(--gold)" stroke-width="1.3"/>
+            <path d="M4 13c0-2 2-3 4-3s3 1.5 4 1.5 2-1.5 4-1.5 4 1 4 3" stroke="var(--gold)" stroke-width="1.3"/>
+            <path d="M12 9V6" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M12 6c-1 0-1-1 0-1.6C13 4.8 13 3.8 12 3.4" stroke="var(--gold)" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sch-time">20:00</span>
+        <span class="sch-label">Розрізання торта</span>
+        <span class="sch-desc">Наймиліша традиція вечора</span>
+      </button>
+    </div>
+
+    <div class="card" style="margin-top:36px;">
+      <div class="label">Місце проведення</div>
+      <p class="big" style="font-size:24px;">Ресторан «Ковчег»</p>
+      <p class="small">
+      <a href="https://maps.app.goo.gl/MdFZ6eTXCh2G3w1HA" target="_blank" rel="noopener">Побудувати маршрут →</a></p>
+    </div>
+
+    <div class="eyebrow" style="margin-top:36px;">До свята залишилось</div>
+    <div class="countdown" id="countdown">
+      <div class="box"><span class="num" id="cd-days">00</span><span class="cap">днів</span></div>
+      <div class="box"><span class="num" id="cd-hours">00</span><span class="cap">год</span></div>
+      <div class="box"><span class="num" id="cd-min">00</span><span class="cap">хв</span></div>
+      <div class="box"><span class="num" id="cd-sec">00</span><span class="cap">сек</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== PALETTE / DRESS CODE ===================== -->
+  <section class="palette reveal">
+    <div class="starfield" id="starfield-palette"></div>
+    <div class="eyebrow">Кольори весілля</div>
+    <div class="divider"></div>
+    <p style="font-family:'Cormorant', serif; font-size:13px; color:var(--gold-dim); margin-top:6px;">наведіть або торкніться кольору, щоб побачити назву</p>
+
+    <div class="swatches-row">
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#f7f4ea"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Білий</span>
+      </div>
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#14351f"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Лісовий зелений</span>
+      </div>
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#767c46"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Оливковий</span>
+      </div>
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#dcccA4"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Бежевий</span>
+      </div>
+    </div>
+    <div class="swatches-row">
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#c9a76a"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Золотий</span>
+      </div>
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#bcc4bd"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Срібний</span>
+      </div>
+      <div class="swatch-item">
+        <svg class="swatch-frame" viewBox="0 0 64 64"><circle cx="32" cy="32" r="19" fill="#6b4a34"/><use href="#ornFrame"/></svg>
+        <span class="swatch-name">Коричневий</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RSVP FORM ===================== -->
+  <section class="rsvp reveal">
+    <div class="starfield" id="starfield-rsvp"></div>
+    <div class="eyebrow">Підтвердіть участь</div>
+    <div class="divider"></div>
+    <p style="font-family:'Cormorant', serif; font-size:13px; color:var(--gold-dim); margin-top:-10px; margin-bottom:6px;">натисніть кнопку — і підтвердження надійде нам одразу</p>
+
+    <form class="rsvp-form" id="rsvpForm" action="https://formspree.io/f/xwvddgjr" method="POST">
+      <div class="field">
+        <label for="guestName">Ваше ім'я</label>
+        <input type="text" id="guestName" name="guestName" placeholder="Як до вас звертатися" required>
+      </div>
+
+      <div class="field">
+        <label>Підтвердіть присутність</label>
+        <div class="radio-row">
+          <input type="radio" id="attendYes" name="attend" value="Прийду" checked>
+          <label for="attendYes">Прийду</label>
+          <input type="radio" id="attendNo" name="attend" value="На жаль, не зможу">
+          <label for="attendNo">Не зможу</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="wishes">Побажання чи коментар (за бажання)</label>
+        <textarea id="wishes" name="wishes" placeholder="Алергії, побажання щодо музики, теплі слова..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Надіслати підтвердження</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+  </section>
+
+  <!-- ===================== CLOSING ===================== -->
+  <section class="closing reveal">
+    <div class="starfield" id="starfield-closing"></div>
+    <svg class="wreath-svg" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,20 Q60,70 110,72 Q160,70 200,20" stroke="#4c6b45" stroke-width="2.5" fill="none" opacity="0.85"/>
+      <g fill="#dcccA4">
+        <g transform="translate(40,32)"><circle cx="0" cy="-6" r="4"/><circle cx="5" cy="-3" r="4"/><circle cx="5" cy="3" r="4"/><circle cx="0" cy="6" r="4"/><circle cx="-5" cy="3" r="4"/><circle cx="-5" cy="-3" r="4"/></g>
+        <g transform="translate(180,32)"><circle cx="0" cy="-6" r="4"/><circle cx="5" cy="-3" r="4"/><circle cx="5" cy="3" r="4"/><circle cx="0" cy="6" r="4"/><circle cx="-5" cy="3" r="4"/><circle cx="-5" cy="-3" r="4"/></g>
+      </g>
+      <circle cx="40" cy="32" r="3" fill="#6b4a34"/>
+      <circle cx="180" cy="32" r="3" fill="#6b4a34"/>
+      <g transform="translate(110,74)">
+        <g fill="#f7f4ea"><circle cx="0" cy="-6" r="4"/><circle cx="5" cy="-3" r="4"/><circle cx="5" cy="3" r="4"/><circle cx="0" cy="6" r="4"/><circle cx="-5" cy="3" r="4"/><circle cx="-5" cy="-3" r="4"/></g>
+        <circle cx="0" cy="0" r="3" fill="#c9a76a"/>
+      </g>
+      <ellipse cx="65" cy="46" rx="2.5" ry="5" fill="#d9b968" transform="rotate(20 65 46)"/>
+      <ellipse cx="155" cy="46" rx="2.5" ry="5" fill="#d9b968" transform="rotate(-20 155 46)"/>
+    </svg>
+
+    <div class="eyebrow">З нетерпінням чекаємо</div>
+    <div class="names-script">Максим &amp; Дарина</div>
+    <div class="rsvp-note">Будь ласка, підтвердіть участь до 1 серпня 2026</div>
+  </section>
+
+  <!-- ===================== CALENDAR ===================== -->
+  <section class="calendar reveal">
+    <div class="eyebrow">Не забудьте про дату</div>
+    <div class="divider"></div>
+    <p style="font-family:'Cormorant Garamond', serif; font-size:16px;">Додайте подію у свій календар</p>
+    <div class="cal-buttons">
+      <a class="cal-btn" id="gcalBtn" href="#" target="_blank" rel="noopener">Google Calendar</a>
+      <a class="cal-btn" id="icsBtn" href="#" target="_blank" rel="noopener">Apple Calendar</a>
+    </div>
+  </section>
+
+  <footer>зроблено з любов'ю • Максим &amp; Дарина, 2026</footer>
+</div>
+
+<script>
+  // ---- generate stars for each starfield container ----
+  function scatterStars(containerId, count){
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    for(let i=0;i<count;i++){
+      const s = document.createElement('div');
+      const isSpark = Math.random() < 0.15;
+      s.className = 'star';
+      const size = isSpark ? (Math.random()*3+3) : (Math.random()*2+1);
+      s.style.width = size+'px';
+      s.style.height = size+'px';
+      s.style.left = Math.random()*100+'%';
+      s.style.top = Math.random()*100+'%';
+      s.style.animationDelay = (Math.random()*3.5)+'s';
+      s.style.animationDuration = (2.5+Math.random()*3)+'s';
+      el.appendChild(s);
+    }
+    // fireflies
+    for(let i=0;i<4;i++){
+      const f = document.createElement('div');
+      f.className='firefly';
+      f.style.left = (10+Math.random()*80)+'%';
+      f.style.top = (20+Math.random()*60)+'%';
+      f.style.animationDelay = (Math.random()*6)+'s';
+      f.style.animationDuration = (7+Math.random()*4)+'s';
+      el.appendChild(f);
+    }
+  }
+  scatterStars('starfield-cover', 32);
+  scatterStars('starfield-hero', 44);
+  scatterStars('starfield-intro', 21);
+  scatterStars('starfield-details', 35);
+  scatterStars('starfield-palette', 24);
+  scatterStars('starfield-rsvp', 24);
+  scatterStars('starfield-closing', 32);
+
+  // ---- interactive swatches (tap on mobile) ----
+  (function(){
+    const swatches = document.querySelectorAll('.swatch-item');
+    swatches.forEach(function(item){
+      item.addEventListener('click', function(){
+        const wasActive = item.classList.contains('active');
+        swatches.forEach(function(i){ i.classList.remove('active'); });
+        if(!wasActive){ item.classList.add('active'); }
+      });
+    });
+  })();
+
+  // ---- interactive schedule ----
+  (function(){
+    const items = document.querySelectorAll('.sch-card');
+    items.forEach(function(item){
+      item.addEventListener('click', function(){
+        const wasActive = item.classList.contains('active');
+        items.forEach(function(i){ i.classList.remove('active'); });
+        if(!wasActive){ item.classList.add('active'); }
+      });
+    });
+  })();
+
+  // ---- cover -> invitation ----
+  (function(){
+    const cover = document.getElementById('cover');
+    const btn = document.getElementById('openBtn');
+    btn.addEventListener('click', function(){
+      if (cover.classList.contains('opening')) return;
+      cover.classList.add('opening');
+      setTimeout(function(){
+        document.body.classList.remove('locked');
+        cover.classList.add('hide');
+      }, 950);
+    });
+  })();
+
+  // ---- RSVP form ----
+  (function(){
+    const form = document.getElementById('rsvpForm');
+    const status = document.getElementById('formStatus');
+    const submitBtn = form.querySelector('.submit-btn');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const attend = document.querySelector('input[name="attend"]:checked').value;
+      const wishes = document.getElementById('wishes').value.trim();
+
+      if(!name){ return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Надсилаємо...";
+      status.textContent = "";
+
+      const data = new FormData();
+      data.append("guestName", name);
+      data.append("attend", attend);
+      data.append("wishes", wishes || "—");
+      data.append("_subject", "RSVP — весілля Максима та Дарини (29.08.2026)");
+
+      fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { "Accept": "application/json" }
+      })
+      .then(function(response){
+        if(response.ok){
+          form.reset();
+          submitBtn.textContent = "Надіслано ✓";
+          status.textContent = "Дякуємо! Ми отримали вашу відповідь. З нетерпінням чекаємо 💛";
+        } else {
+          throw new Error("Formspree error");
+        }
+      })
+      .catch(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Надіслати підтвердження";
+        status.textContent = "Щось пішло не так. Спробуйте ще раз або напишіть нам напряму.";
+      });
+    });
+  })();
+
+  // ---- add to calendar ----
+  (function(){
+    const title = "Весілля Максима та Дарини";
+    const location = "Ресторан «Ковчег»";
+    const details = "Велком-зона о 13:00, церемонія о 13:30, банкет о 14:30, розрізання торта о 20:00.";
+    const startUTC = "20260829T100000Z"; // 13:00 EEST
+    const endUTC   = "20260829T200000Z"; // 23:00 EEST
+
+    const gcalUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+      + "&text=" + encodeURIComponent(title)
+      + "&dates=" + startUTC + "/" + endUTC
+      + "&details=" + encodeURIComponent(details)
+      + "&location=" + encodeURIComponent(location);
+    document.getElementById('gcalBtn').setAttribute('href', gcalUrl);
+
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Wedding//UA",
+      "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      "UID:" + Date.now() + "@wedding",
+      "DTSTAMP:" + startUTC,
+      "DTSTART:" + startUTC,
+      "DTEND:" + endUTC,
+      "SUMMARY:" + title,
+      "LOCATION:" + location,
+      "DESCRIPTION:" + details,
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\r\n");
+
+    const icsBtn = document.getElementById('icsBtn');
+    icsBtn.removeAttribute('target');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if(isIOS){
+      icsBtn.setAttribute('href', "data:text/calendar;charset=utf-8," + encodeURIComponent(ics));
+    } else {
+      const icsBlob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const icsUrl = URL.createObjectURL(icsBlob);
+      icsBtn.setAttribute('href', icsUrl);
+      icsBtn.setAttribute('download', 'vesillya-maksym-daryna.ics');
+    }
+  })();
+
+  // ---- scroll reveal ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.18});
+  revealEls.forEach(el=>io.observe(el));
+
+  // ---- countdown ----
+  const target = new Date('2026-08-29T13:00:00');
+  function updateCountdown(){
+    const now = new Date();
+    let diff = target - now;
+    if(diff < 0) diff = 0;
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-min').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-sec').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
